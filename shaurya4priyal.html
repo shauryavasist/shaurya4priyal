@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Priyal 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #ff9aa2, #ff4d6d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* 💌 Envelope */
+.envelope {
+  font-size: 140px;
+  cursor: pointer;
+  transition: all 1s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.envelope.open {
+  transform: translateY(-260px) scale(0.6);
+  opacity: 0.4;
+}
+
+/* Letter */
+.letter {
+  position: absolute;
+  width: 85%;
+  max-width: 440px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 20px;
+  padding: 35px 30px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(120px);
+  transition: all 1.2s ease;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.letter.show {
+  opacity: 1;
+  transform: translateY(-60px);
+  pointer-events: auto;
+}
+
+h1 {
+  color: #e63946;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-weight: normal;
+  margin-bottom: 25px;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 20px;
+  position: relative;
+  height: 60px;
+}
+
+button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+#yesBtn {
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: white;
+  box-shadow: 0 0 18px rgba(255,255,255,0.7);
+}
+
+#noBtn {
+  right: 0;
+  background: #aaa;
+  color: white;
+}
+
+/* Final Screen */
+.final {
+  height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle, #ff758f, #ff1e56);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: white;
+  padding: 40px;
+}
+
+.final h1 {
+  font-size: 3.2rem;
+  text-shadow: 0 0 10px #fff, 0 0 30px #ffb3c6;
+}
+
+.final p {
+  max-width: 760px;
+  font-size: 1.35rem;
+  line-height: 1.9;
+  text-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+
+/* Floating Effects */
+.float {
+  position: absolute;
+  bottom: -30px;
+  font-size: 18px;
+  opacity: 0.8;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/14/audio_4e6f7c1e9d.mp3">
+</audio>
+
+<div class="envelope" id="envelope">💌</div>
+
+<div class="letter" id="letter">
+  <h1>Priyal, will you be my Valentine? ❤️</h1>
+  <h2>— Shaurya</h2>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 🙃</button>
+  </div>
+</div>
+
+<script>
+const envelope = document.getElementById("envelope");
+const letter = document.getElementById("letter");
+const music = document.getElementById("music");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+const noTexts = [
+  "Think again 🤨",
+  "Are you sure? 🥺",
+  "Last chance 😳",
+  "No escaping 😅"
+];
+
+let noCount = 0;
+let opened = false;
+
+/* Open envelope */
+envelope.addEventListener("click", () => {
+  if (opened) return;
+  opened = true;
+  envelope.classList.add("open");
+  letter.classList.add("show");
+  music.volume = 0.4;
+  music.play();
+});
+
+/* No button behavior */
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.transform =
+    `translate(${Math.random()*200-100}px, ${Math.random()*60}px)`;
+});
+
+noBtn.addEventListener("click", () => {
+  noBtn.innerText = noTexts[Math.min(noCount, noTexts.length - 1)];
+  noCount++;
+});
+
+/* Yes button */
+yesBtn.addEventListener("click", () => {
+  document.body.innerHTML = `
+    <div class="final">
+      <h1>Happy Valentine’s Day 💖</h1>
+      <p>
+        From the moment you came into my life, everything felt warmer,
+        brighter, and more meaningful.
+        <br><br>
+        Priyal, I promise I will be standing by your side every single time.
+        No complaints, no walking away.
+        I will keep working on myself and become the best version you need,
+        improving the things you feel I should.
+        <br><br>
+        A breakup is not an option for me —
+        we will talk, we will sort out our fights,
+        and we will choose each other every time.
+        I’m serious about you. 🤍
+      </p>
+      <h2>— Shaurya 🤍</h2>
+    </div>
+  `;
+});
+
+/* Floating hearts & sparkles */
+setInterval(() => {
+  const el = document.createElement("div");
+  el.className = "float";
+  el.innerHTML = Math.random() > 0.5 ? "❤️" : "✨";
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.fontSize = Math.random() * 26 + 14 + "px";
+  el.style.animationDuration = Math.random() * 4 + 6 + "s";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 10000);
+}, 220);
+</script>
+
+</body>
+</html>
